@@ -19,9 +19,11 @@ LL func(int n, int start, int end)
 {
 	if(n==1)
 		return 0;
+	if(n==2)
+		return arr[start];
 	LL suml,sumr,minl,minr;
 	suml = sumr = 0;
-	minl = minr = INT_MAX;
+	minl = minr = LONG_MAX;
 
 	int prev = left(start,n);
 	while(prev != end)
