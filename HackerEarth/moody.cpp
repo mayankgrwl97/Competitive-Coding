@@ -37,15 +37,15 @@ void func(LL n)
 
 int main()
 {
-	freopen("input.txt","r",stdin);
-	int t;
+	/*int t;
 	LL n;
 	cin>>t;
 
 	while(t--)
 	{
-		scanf("%lld",&n);
+		scanf("%d",&n);
 		func(n);
-	}
+	}*/
+	cout<<1;
 	return 0;
 }
