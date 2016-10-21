@@ -1,84 +1,83 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int arr[100100];
-int dp1[100100];
-int dp2[100100];
+#define pb push_back
+#define mp make_pair
+#define scani(n) scanf("%d",&n);
+#define MOD (ll)1000000007
+#define endl '\n'
+#define EPS 1e-9
+#define FOR(i,n) for(int i=0; i<n; i++)
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);
 
-void populate(int n)
+typedef long long LL;
+typedef pair<int,int> pii;
+typedef vector<int> vi;
+typedef vector<pii> vii;
+
+LL a[100100];
+LL dp1[100100][2];//dp1[i][0] sum from left to i excluding i //dp1[i][1] sum from left to i including i
+LL dp2[100100][2];//dp2[i][0] sum from right to i excluding i //dp2[i][1] sum from right to i including i
+
+void func(LL n)
 {
-	int max = -1;
-	sort(arr,arr+n);
-	for(int i=0; i<n; i++)
+	if(n==1)
 	{
-		cout<<arr[i]<<"\t";
-	}
-	dp1[0] = arr[0];
-	int j;
-	for(int i=1; i<n; i++)
-	{
-		j=i-1;
-		while((arr[j] == (arr[i]-1)) && (j>=0))
-			j--;
-		if(j<0)
-			dp1[i] = arr[i];
-		else
-			dp1[i] = dp1[j] + arr[i];
+		cout<<a[1];
+		return ;
 	}
 
-cout<<endl;
-	for (int i = 0; i < n; ++i)
+	dp1[1][0] = 0;
+	dp1[1][1] = a[1];
+
+	dp1[2][0] = dp1[1][1];
+	dp1[2][1] = 2*a[2];
+
+	for(LL i=3; i<=n; i++)
 	{
-		cout<<dp1[i]<<"\t";
+		dp1[i][0] = max(dp1[i-1][0], dp1[i-1][1]);
+		dp1[i][1] = max(dp1[i-2][0], dp1[i-2][1]) + i*a[i];
 	}
 
-	dp2[n-1] = arr[n-1];
-	for(int i=n-2; i>=0; i--)
+	dp2[n][0] = 0;
+	dp2[n][1] = n*a[n];
+
+	dp2[n-1][0] = dp2[n][1];
+	dp2[n-1][1] = (n-1)*a[n-1];
+
+	for(LL i=n-2; i>0; i--)
 	{
-		j=i+1;
-		while((arr[j] == (arr[i]+1)) && (j<n))
-			j++;
-		if(j>=n)
-			dp2[i] = arr[i];
-		else
-			dp2[i] = dp2[j] + arr[i];
+		dp2[i][0] = max(dp2[i+1][0], dp2[i+1][1]);
+		dp2[i][1] = max(dp2[i+2][0], dp2[i+2][1]) + i*a[i];
 	}
 
-	cout<<endl;
+	LL ans = -1;
 
-for (int i = 0; i < n; ++i)
+	for(LL i=1; i<=n; i++)
 	{
-		cout<<dp2[i]<<"\t";
+		ans = max(ans, max(dp1[i][0] + dp2[i][0] , dp1[i][1] + dp2[i][1] - i*a[i]));
 	}
-
-	for(int i=0; i<n; i++)
-	{
-		dp1[i] = dp1[i] + dp2[i] - arr[i];
-		if(max<dp1[i])
-			max = dp1[i];
-	}
-	printf("%d\n",max);
+	cout<<ans;
+	return ;
 }
 
 int main()
 {
+	io;
 	#ifndef ONLINE_JUDGE
-		freopen("input.txt", "r", stdin);
+		freopen("input.txt","r",stdin);
+		// freopen("output.txt","w",stdout);
 	#endif
 
-	int n,tmp;
+	int n;
 	cin>>n;
-
+	LL b,mx = -1;	
 	for(int i=0; i<n; i++)
 	{
-		scanf("%d",arr+i);
+		cin>>b,a[b]++;
+		if(mx<b)
+			mx = b;
 	}
-
-	populate(n);
-
+	func(mx);
 	return 0;
 }
-
-/*1 1 2 2 2 2 2 3 3
-
-1 2 1 3 2 2 2 2 3*/

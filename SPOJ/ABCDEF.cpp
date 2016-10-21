@@ -1,134 +1,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int arr[100];
-int lhs[60100];
-int rhs[100100];
+#define pb push_back
+#define mp make_pair
+#define scani(n) scanf("%d",&n);
+#define endl '\n'
+#define EPS 1e-9
+#define FOR(i,n) for(int i=0; i<n; i++)
+#define io ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define X first
+#define Y second
+#define for0(i,n) for(int i=0; i<n; i++)
+#define for1(i,n) for(int i=1; i<=n; i++)
+#define forr(i,n) for(int i=n-1; i>=0; i--)
 
-int binsearch(int a, int n)
-{
-	int lo = 0;
-	int hi = n-1;
-	int mid;
-	while(lo<=hi)
-	{
-		mid = (lo+hi)/2;
-		if(lhs[mid] == a)
-			return 1;
-		else if(lhs[mid]<a)
-			lo = mid+1;
-		else
-			hi = mid-1;
-	}
-	return 0;
-}
+typedef long long LL;
+typedef pair<int,int> pii;
+typedef vector<int> vi;
+typedef vector<pii> vii;
 
-void func(int n)
-{
-	for(int i=0; i<n; i++)
-	{
-		for(int j=0; j<n; j++)
-		{	
-			if(arr[i] != arr[j])
-				for(int k=0; k<n; k++)
-				{
-					lhs[arr[i]*arr[j] + arr[k]]++;
-				}
-		}
-	}
+const int MOD = 1e9+7;
+const int n_ = 1e5+1000;
+const long double PI = acos(-1.0);
 
-	int st = 0;
+LL gcd (LL a, LL b) {return ( a ? gcd(b%a, a) : b );}
+LL power(LL a, LL n) {LL p = 1;while (n > 0) {if(n%2) {p = p * a;} n >>= 1; a *= a;} return p;}
+LL power(LL a, LL n, LL mod) {LL p = 1;while (n > 0) {if(n%2) {p = p * a; p %= mod;} n >>= 1; a *= a; a %= mod;} return p % mod;}
 
-	for(int i=0; i<n; i++)
-	{
-		for(int j=0; j<n; j++)
-		{
-			if(arr[i] != arr[j])
-				for(int k=0; k<n; k++)
-				{
-					if(arr[k] != 0)
-						rhs[st++] = (arr[i]+arr[j]) * arr[k];
-				}
-		}
-	}
-	for(int i=0; i<n; i++)
-	{
-		
-	}
-
-	return ;
-}
-
-
-
-
-
-
+int s[110];
+vector<int> lhs;
+vector<int> rhs;
 
 void func(int n)
 {
-	int st=0;
-	int l,r;
-
 	for(int i=0; i<n; i++)
 	{
 		for(int j=0; j<n; j++)
 		{
-			if(i != j)
-				for(int k=0; k<n; k++)
-					lhs[st++] = arr[i]*arr[j] + arr[k];
-		}
-		for(int k=0; k<n; k++)
-		{
-			lhs[st++] = arr[i]*arr[i] + arr[k];
+			for(int i)
+			if(s[i] == s[j])
+				continue;
+			lhs.pb(s[i]*s[j] + s[k]);
 		}
 	}
-	l = st;
-	sort(lhs,lhs+l);
-	st = 0;
-
-	for(int i=0; i<n; i++)
-	{
-		for(int j=0; j<n; j++)
-		{
-			if(i!=j)
-				for(int k=0; k<n; k++)
-				{
-					if(arr[k] != 0)
-						rhs[st++] = (arr[i]+arr[j]) * arr[k];
-				}
-		}
-		for(int k=0; k<n; k++)
-		{
-			rhs[st++] = (arr[i]+arr[i]) * arr[k];
-		}
-	}
-	r = st;
-	cout<<l<<'\n';
-	for(int i=0; i<l; i++)
-	{
-		cout<<lhs[i]<<' ';
-	}
-	cout<<'\n';
-	sort(rhs,rhs+r);
-
-	for(int i=0; i<r; i++)
-	{
-		cout<<rhs[i]<<' ';
-	}
-	cout<<'\n';
-	int count = 0;
-	for(int i=0; i<r; i++)
-	{
-		if(binsearch(rhs[i],n))
-			count++;
-	}
-	cout<<count;
 	return ;
 }
 
 int main()
 {
+	io;
 	#ifndef ONLINE_JUDGE
 		freopen("input.txt","r",stdin);
 		// freopen("output.txt","w",stdout);
@@ -138,10 +58,7 @@ int main()
 	cin>>n;
 
 	for(int i=0; i<n; i++)
-	{
-		cin>>arr[i];
-	}
-	func(n);
+		cin>>s[i];	
 	
 	return 0;
 }

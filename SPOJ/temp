@@ -1,0 +1,72 @@
+Let us suppose we are given a set of n items where each item i has weight wi and value vi
+Now sort the items by decreasing values of vi/wi
+Let the knapsack can hold a total weight of K and let the current weight limit be k (initially k=K)
+
+algorithm_knapsack(K,list)//K = capacity of knapsack and list is the sorted list of items
+	k = K;
+	for each item i in list
+		if k>=wi
+			i.add(knapsack)
+			k = k - wi
+			xi = 1
+		if k<wi
+			xi = k/wi (we take a fraction k/wi of item i)
+
+
+Correctness:
+Given a set of n items {1, 2, ..., n}
+
+Assume items sorted by wi/vi values : ρ1 ≥ ρ2 ≥ ... ≥ ρn
+
+Let the greedy solution be G = <x1, x2, ..., xk>
+
+xi indicates fraction of item i taken (all xi = 1, except possibly for i = k)
+
+Consider any optimal solution O = <y1, y2, ..., yn>
+
+yi indicates fraction of item i taken in O (for all i, 0 ≤ yi ≤1)
+
+Knapsack must be full in both G and O:
+
+sum(xiwi) = sum(yiwi) = K
+
+Consider the first item i where the two selections differ.
+By definition, solution G takes a greater amount of item i
+than solution O(because the greedy solution always takes as
+much as it can). Let x = xi − yi
+
+Consider the following new solution O' constructed from O:
+For j < i, keep yj' = yj.
+Set yi' = xi
+
+In O, remove items of total weight xwi from items i + 1 to n,
+resetting the yj' appropriately.
+
+This is always doable because sum(xj) = sum(yj)//sum from j = 1 to n
+
+The total value of solution O' is greater than or equal to the
+total value of solution O
+
+Since O is largest possible solution and value of O' cannot be
+smaller than that of O, O and O' must be equal.
+Thus solution O' is also optimal.
+
+By repeating this process, we will eventually convert O into G,
+without changing the total value of the selection.
+
+Therefore G is also optimal.
+
+Your approach to the problem is correct. You just need to define the variables more appropriately.
+
+Define:
+	weight_knapsack = maximum capacity of knapsack
+	total_weight = sum of weights of items added so far
+	x = the index of the item in the sorted list
+
+Some mistakes in the code:
+	initialize x = 0 (if we assume 0 indexing)
+	s = (weight_knapsack-total_weight)/s
+
+
+So to rectify the above problems i am providing you the correct solution which is as follows
+
